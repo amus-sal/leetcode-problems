@@ -1,0 +1,86 @@
+"Min Heap":  https://leetcode.com/problems/smallest-range-covering-elements-from-k-lists/solution/
+
+
+package solution
+
+// you can also use imports, for example:
+ import (
+     "fmt"
+ )
+// import "os"
+
+// you can write to stdout for debugging purposes, e.g.
+// fmt.Println("this is a debug message")
+
+    const MaxUint = ^uint(0) 
+    const MinUint = 0 
+    const MaxInt = int(MaxUint >> 1) 
+func Solution(A []int) int {
+    // write your code in Go 1.4
+    smallestElem := findTheMin(A) // smallest number 
+    leftSmallestElem := -1
+    rightSmallestElem := -1
+    if smallestElem == 0 || smallestElem == 1  {
+        rightSmallestElem = findTheMin(A[smallestElem+1:])
+        return A[smallestElem] + A[rightSmallestElem + smallestElem +1]
+    }
+    if smallestElem == len(A) -1  || smallestElem == len(A) -2{
+        leftSmallestElem = findTheMin(A[:smallestElem-1])
+        return A[smallestElem] + A[leftSmallestElem ]
+    }
+        rightSmallestElem = findTheMin(A[smallestElem+1:])
+        leftSmallestElem = findTheMin(A[:smallestElem-1])
+
+
+    return  A[smallestElem] + min(A[rightSmallestElem + smallestElem +1], A[leftSmallestElem])
+}
+
+
+/*
+
+*/
+
+func findTheMin(arr []int) int{
+    fmt.Println(arr)
+    ans := -1
+
+    minVal := MaxInt
+    for index, val := range arr {
+        if val < minVal {
+            minVal = val 
+            ans = index
+        } 
+    } 
+    return ans
+}
+
+func min(x int, y int) int{
+    if x < y {
+        return x 
+    }
+    return y 
+}
+
+
+
+/*
+this Solution is O(N) for Time Compexity
+we can  use brute force solution bt gett all the possible elements 
+by nested iterations 
+ and then check the min val 
+Time Complexity is O(N^2)
+space Complexity is O(N^2)
+
+
+*/
+
+
+package solution
+
+// you can also use imports, for example:
+// import "fmt"
+// import "os"
+import "sort"
+
+// you can write to stdout for debugging purposes, e.g.
+// fmt.Println("this is a debug message")
